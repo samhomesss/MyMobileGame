@@ -1,0 +1,4 @@
+AddressAble -> 패치 시스템을 만든다고 생각하는 것이 편하다.
+Spine 방식의 애니메이션 사용 -> 구글 spine을 이용하는게 좋다. https://ko.esotericsoftware.com/spine-unity-download
+Data 저장 방식 사용을 위한 Json 파일 -> com.unity.nuget.newtonsoft-json 을 이용한 설치 
+게임에 필요한 리소스를 다 로드하고 메모리에 로드하고 꺼내 쓰는 형태가 이상적인 형태다 
