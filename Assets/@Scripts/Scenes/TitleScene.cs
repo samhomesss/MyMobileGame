@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class TitleScene : MonoBehaviour
+public class TitleScene : BaseScene
 {
     void Start()
     {
-        // ºñµ¿±â ÇÔ¼ö ÀÌ±â ¶§¹®¿¡ Start¿¡ ³Ö¾îµµ ÀÚ±â°¡ ¾Ë¾Æ¼­ ½ÇÇàÀÌ µÊ 
-        // ¸ðµç »óÈ²ÀÌ ¿Ï·á°¡ µÇ¸é ¿ì¸®°¡ Á¤ÇØ³õÀº Callback ÇÔ¼ö¸¦ ½ÇÇàÇÏ°í ¿Ï·á Åëº¸¸¦ ³¯¸°´Ù.
-        // ¸ðµç ¹èÆ÷ÀÇ °æ¿ì ±×³É ¾Ë°Ô ¸ð¸£°Ô µÚ¿¡¼­ µÇ´Â °æ¿ì°¡ ¸¹Áö ÇØ´ç ÀÛ¾÷¶§¹®¿¡ 10ÃÊ 20ÃÊ µ¿¾È °ÔÀÓÀ» ¸øÇÏ¸é ºÒÄèÇÑ °æÇèÀÌ µÉ ¼ö ÀÖ´Ù.
+        // ë¹„ë™ê¸° í•¨ìˆ˜ ì´ê¸° ë•Œë¬¸ì— Startì— ë„£ì–´ë„ ìžê¸°ê°€ ì•Œì•„ì„œ ì‹¤í–‰ì´ ë¨ 
+        // ëª¨ë“  ìƒí™©ì´ ì™„ë£Œê°€ ë˜ë©´ ìš°ë¦¬ê°€ ì •í•´ë†“ì€ Callback í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•˜ê³  ì™„ë£Œ í†µë³´ë¥¼ ë‚ ë¦°ë‹¤.
+        // ëª¨ë“  ë°°í¬ì˜ ê²½ìš° ê·¸ëƒ¥ ì•Œê²Œ ëª¨ë¥´ê²Œ ë’¤ì—ì„œ ë˜ëŠ” ê²½ìš°ê°€ ë§Žì§€ í•´ë‹¹ ìž‘ì—…ë•Œë¬¸ì— 10ì´ˆ 20ì´ˆ ë™ì•ˆ ê²Œìž„ì„ ëª»í•˜ë©´ ë¶ˆì¾Œí•œ ê²½í—˜ì´ ë  ìˆ˜ ìžˆë‹¤.
         Managers.Resource.LoadAllAsync<Object>("PreLoad" , (key , count , totalCount) =>
         {
             Debug.Log($"{key} {count}/{totalCount}");
             if (count == totalCount)
             {
-                Debug.Log("¸ðµç ¿ÀºêÁ§Æ® ´Ù¿î ¿Ï·á");
+                Debug.Log("ëª¨ë“  ì˜¤ë¸Œì íŠ¸ ë‹¤ìš´ ì™„ë£Œ");
             }
         });
     }

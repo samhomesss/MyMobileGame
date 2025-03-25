@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 
 /// <summary>
-/// °ÔÀÓ¿¡ ÇÊ¿äÇÑ ¸®¼Ò½º¸¦ ´Ù ·ÎµåÇÏ°í ¸Ş¸ğ¸®¿¡ ·ÎµåÇÏ°í ²¨³» ¾²´Â ÇüÅÂ°¡ ÀÌ»óÀûÀÎ ÇüÅÂ´Ù 
+/// ê²Œì„ì— í•„ìš”í•œ ë¦¬ì†ŒìŠ¤ë¥¼ ë‹¤ ë¡œë“œí•˜ê³  ë©”ëª¨ë¦¬ì— ë¡œë“œí•˜ê³  êº¼ë‚´ ì“°ëŠ” í˜•íƒœê°€ ì´ìƒì ì¸ í˜•íƒœë‹¤ 
 /// </summary>
 public class ResourceManager
 {
@@ -17,14 +17,14 @@ public class ResourceManager
     #region Load Resource
     public T Load<T>(string key) where T: Object
     {
-        if (_resources.TryGetValue(key , out Object resource)) // ÇØ´ç Å° °ªÀÇ ¿ÀºêÁ§Æ®¸¦ Ã£¾Æ¿À°í 
+        if (_resources.TryGetValue(key , out Object resource)) // í•´ë‹¹ í‚¤ ê°’ì˜ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì˜¤ê³  
         {
-            return resource as T; // Object Type ÀÌ´Ï±î T·Î Å¸ÀÔÀ» Ä³½ºÆÃ ÇØÁØ´Ù.
+            return resource as T; // Object Type ì´ë‹ˆê¹Œ Të¡œ íƒ€ì…ì„ ìºìŠ¤íŒ… í•´ì¤€ë‹¤.
         }
-        return null; // ¾ø´Ù¸é null ¹İÈ¯ 
+        return null; // ì—†ë‹¤ë©´ null ë°˜í™˜ 
     }
 
-    // ¸Ş¸ğ¸®¿¡ ·Îµå ÇØ³õÀº ¸ğµç°ÍµéÀ» ÇÊ¿ä ÇÒ¶§¸¶´Ù Load ÇØ¼­ »ç¿ëÇÏ´Â ¹æ½ÄÀ» »ç¿ëÇÑ´Ù.
+    // ë©”ëª¨ë¦¬ì— ë¡œë“œ í•´ë†“ì€ ëª¨ë“ ê²ƒë“¤ì„ í•„ìš” í• ë•Œë§ˆë‹¤ Load í•´ì„œ ì‚¬ìš©í•˜ëŠ” ë°©ì‹ì„ ì‚¬ìš©í•œë‹¤.
     public GameObject Instantiate(string key, Transform parent = null , bool pooling = false)
     {
         GameObject prefab = Load<GameObject>(key);
@@ -32,6 +32,11 @@ public class ResourceManager
         {
             Debug.LogError($"Failed to load prefab : {key}");
             return null;
+        }
+
+        if (pooling)
+        {
+            return Managers.Pool.Pop(prefab);
         }
 
         GameObject go = Object.Instantiate(prefab, parent);
@@ -49,61 +54,61 @@ public class ResourceManager
     #endregion
 
     #region Addressable
-    // ¸Ş¸ğ¸®¿¡ ¸ğµç ¿ÀºêÁ§Æ®¸¦ ÀúÀå ÇÏ±â À§ÇØ¼­ Load ÇÏ´Â ÇÔ¼ö »ç¿ë 
+    // ë©”ëª¨ë¦¬ì— ëª¨ë“  ì˜¤ë¸Œì íŠ¸ë¥¼ ì €ì¥ í•˜ê¸° ìœ„í•´ì„œ Load í•˜ëŠ” í•¨ìˆ˜ ì‚¬ìš© 
     private void LoadAsync<T>(string key , Action<T> callback = null ) where T : UnityEngine.Object
     {
-        //Ä³½¬
-        if (_resources.TryGetValue(key, out Object resource)) // Dictionary ¾È¿¡ °ªÀÌ ¾ø´Ù¸é?
+        //ìºì‰¬
+        if (_resources.TryGetValue(key, out Object resource)) // Dictionary ì•ˆì— ê°’ì´ ì—†ë‹¤ë©´?
         {
-            callback?.Invoke(resource as T); //CallBack ÀÌ ³ÎÀÌ ¾Æ´Ò¶§ À§¿¡¼­ ³ª¿Â ¿ÀºêÁ§Æ®ÀÇ °ªÀ» ¸Å°³º¯¼ö·Î ³Ö°í ÇÔ¼ö¸¦ ½ÇÇà
+            callback?.Invoke(resource as T); //CallBack ì´ ë„ì´ ì•„ë‹ë•Œ ìœ„ì—ì„œ ë‚˜ì˜¨ ì˜¤ë¸Œì íŠ¸ì˜ ê°’ì„ ë§¤ê°œë³€ìˆ˜ë¡œ ë„£ê³  í•¨ìˆ˜ë¥¼ ì‹¤í–‰
         }
 
-        string loadKey = key; // Å°¸¦ ¹Ş¾Æ¿À°í 
+        string loadKey = key; // í‚¤ë¥¼ ë°›ì•„ì˜¤ê³  
 
-        if (key.Contains(".sprite")) // key Áß¿¡ .sprite ºÙÀº°Å Ã£´Â°Å 
+        if (key.Contains(".sprite")) // key ì¤‘ì— .sprite ë¶™ì€ê±° ì°¾ëŠ”ê±° 
         {
             loadKey = $"{key}[{key.Replace(".sprite", "")}]";
         }
 
-        // sprite°¡ ¾Æ´Ï¶ó¸é (ÀÏ¹İÀûÀÎ °æ¿ì¶ó¸é) Addressables.LoadAssetAsync<T> ¶ó´Â ÇÔ¼ö¸¦ ÀÌ¿ëÇØ¼­ 
-        // ÇØ´ç ÇÔ¼ö°¡ HandleÀ» ¹ñ¾îÁÖ´Âµ¥ ±× Handle¿¡´Ù°¡ Completed(¿Ï·á°¡ µÇ¾úÀ¸¸é)ºÙ¿©¼­ ½ÇÇà ½ÃÅ³ ÇÔ¼ö¸¦ ÀÛ¼ºÇÔ 
-        // Handle.Completed¶ó¸é ÇÚµé¿¡ ÀÌ¹Ì ÀÖ´Â ÇÔ¼ö 
+        // spriteê°€ ì•„ë‹ˆë¼ë©´ (ì¼ë°˜ì ì¸ ê²½ìš°ë¼ë©´) Addressables.LoadAssetAsync<T> ë¼ëŠ” í•¨ìˆ˜ë¥¼ ì´ìš©í•´ì„œ 
+        // í•´ë‹¹ í•¨ìˆ˜ê°€ Handleì„ ë±‰ì–´ì£¼ëŠ”ë° ê·¸ Handleì—ë‹¤ê°€ Completed(ì™„ë£Œê°€ ë˜ì—ˆìœ¼ë©´)ë¶™ì—¬ì„œ ì‹¤í–‰ ì‹œí‚¬ í•¨ìˆ˜ë¥¼ ì‘ì„±í•¨ 
+        // Handle.Completedë¼ë©´ í•¸ë“¤ì— ì´ë¯¸ ìˆëŠ” í•¨ìˆ˜ 
         var asyncOperation = Addressables.LoadAssetAsync<T>(loadKey);
-        asyncOperation.Completed += (op) => // ¿Ï·á°¡ µÇ¾ú´Ù¸é
+        asyncOperation.Completed += (op) => // ì™„ë£Œê°€ ë˜ì—ˆë‹¤ë©´
         {
-            _resources.Add(key, op.Result); //  °á°ú¸¦ ÀúÀå ÇÏ°í 
-            _handles.Add(key, asyncOperation); // ÇÚµé¿¡ Addressable ·Î ÀúÀå ÇÏ°í 
-            callback?.Invoke(op.Result); // ÇØ´ç op °á°ú¸¦ ÇÔ¼ö·Î ³Ñ°ÜÁÜ 
+            _resources.Add(key, op.Result); //  ê²°ê³¼ë¥¼ ì €ì¥ í•˜ê³  
+            _handles.Add(key, asyncOperation); // í•¸ë“¤ì— Addressable ë¡œ ì €ì¥ í•˜ê³  
+            callback?.Invoke(op.Result); // í•´ë‹¹ op ê²°ê³¼ë¥¼ í•¨ìˆ˜ë¡œ ë„˜ê²¨ì¤Œ 
         };
     }
 
     /// <summary>
-    /// °ÔÀÓÀ» ½ÃÀÛÇÒ¶§ ¸ğµç ¿ÀºêÁ§Æ®¸¦ ÀĞ¾î ¿Ã¶§ »ç¿ë ÇÏ´Â °Í 
-    /// ºñµ¿±â ÇÔ¼ö 
+    /// ê²Œì„ì„ ì‹œì‘í• ë•Œ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ë¥¼ ì½ì–´ ì˜¬ë•Œ ì‚¬ìš© í•˜ëŠ” ê²ƒ 
+    /// ë¹„ë™ê¸° í•¨ìˆ˜ 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="label">ÇØ´ç ¶óº§¿¡´Ù°¡ ¿ì¸®°¡ ·ÎµåÇÏ°í ½Í¾ú´ø PreLoad °¡ ºÙÀº ¿ÀºêÁ§Æ®¸¦</param>
+    /// <param name="label">í•´ë‹¹ ë¼ë²¨ì—ë‹¤ê°€ ìš°ë¦¬ê°€ ë¡œë“œí•˜ê³  ì‹¶ì—ˆë˜ PreLoad ê°€ ë¶™ì€ ì˜¤ë¸Œì íŠ¸ë¥¼</param>
     /// <param name="callback"></param>
     public void LoadAllAsync<T>(string label , Action<string , int , int> callback) where T : Object
     {
-        // ÁÖ¼Ò¸¦ ÀúÀåÇÑ ¸®¼Ò½º¸¦ °¡Á®¿À°í 
-        var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T)); // ÁöÁ¤µÈ ÁÖ¼Ò³ª ¶óº§¿¡ ¸ÅÇÎµÈ ¸®¼Ò½ºÀÇ °´Ã¼ ¸ñ·ÏÀ» ÇØ´ç Å¸ÀÔÀ¸·Î 
-                                                                                  // ºñµ¿±â·Î ¹İÈ¯ ÇÑ´Ù.
-        // ÇÏ³ªÇÏ³ª ¼øÈ¸ ÇÏ¸é¼­ ¿ÀºêÁ§Æ®µéÀ» °¡Á®¿À´Â°É ¿Ï·á ÇÏ´Â °Í 
+        // ì£¼ì†Œë¥¼ ì €ì¥í•œ ë¦¬ì†ŒìŠ¤ë¥¼ ê°€ì ¸ì˜¤ê³  
+        var opHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T)); // ì§€ì •ëœ ì£¼ì†Œë‚˜ ë¼ë²¨ì— ë§¤í•‘ëœ ë¦¬ì†ŒìŠ¤ì˜ ê°ì²´ ëª©ë¡ì„ í•´ë‹¹ íƒ€ì…ìœ¼ë¡œ 
+                                                                                  // ë¹„ë™ê¸°ë¡œ ë°˜í™˜ í•œë‹¤.
+        // í•˜ë‚˜í•˜ë‚˜ ìˆœíšŒ í•˜ë©´ì„œ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ê°€ì ¸ì˜¤ëŠ”ê±¸ ì™„ë£Œ í•˜ëŠ” ê²ƒ 
         opHandle.Completed += (op) =>
         {
-            int loadCount = 0; // ¿ÀºêÁ§Æ® ·Îµù 
+            int loadCount = 0; // ì˜¤ë¸Œì íŠ¸ ë¡œë”© 
             int totalCount = op.Result.Count;
 
-            // ¸ğµç ¿ÀºêÁ§Æ® ±Ü¾î ¿Í¼­ ½ÇÇà 
+            // ëª¨ë“  ì˜¤ë¸Œì íŠ¸ ê¸ì–´ ì™€ì„œ ì‹¤í–‰ 
             foreach(var result in op.Result)
             {
-                if(result.PrimaryKey.Contains(".sprite")) // SpriteÀÇ °æ¿ì ÀÎ½ÄÀÌ ¾ÈµÇ´Â °æ¿ì°¡ ÀÖ¾î¼­ Æ¯º° ´ë¿ì ÇØÁÖ´Â °Í 
+                if(result.PrimaryKey.Contains(".sprite")) // Spriteì˜ ê²½ìš° ì¸ì‹ì´ ì•ˆë˜ëŠ” ê²½ìš°ê°€ ìˆì–´ì„œ íŠ¹ë³„ ëŒ€ìš° í•´ì£¼ëŠ” ê²ƒ 
                 {
                     LoadAsync<Sprite>(result.PrimaryKey, (obj) =>
                     {
                         loadCount++;
-                        //(result.PrimaryKey : ¸¶Áö¸·À¸·Î ¾î¶² ¿¡¼ÂÀ» ¹Ş¾Æ ¿Ô´ÂÁö) , (loadCount : ÇöÀç ³»°¡ ·ÎµùÇÑ ¿¡¼ÂÀÇ °¹¼ö) , (ÃÖÁ¾ÀûÀ¸·Î ¸®¼Ò½º°¡ ¸î°³°¡ ÀÖ´ÂÁö)
+                        //(result.PrimaryKey : ë§ˆì§€ë§‰ìœ¼ë¡œ ì–´ë–¤ ì—ì…‹ì„ ë°›ì•„ ì™”ëŠ”ì§€) , (loadCount : í˜„ì¬ ë‚´ê°€ ë¡œë”©í•œ ì—ì…‹ì˜ ê°¯ìˆ˜) , (ìµœì¢…ì ìœ¼ë¡œ ë¦¬ì†ŒìŠ¤ê°€ ëª‡ê°œê°€ ìˆëŠ”ì§€)
                         callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
                     });
                 }
@@ -121,10 +126,10 @@ public class ResourceManager
 
     public void Clear()
     {
-        _resources.Clear(); // ¸ğµç ¸®¼Ò½º¸¦ ºñ¿öÁÖ°í 
+        _resources.Clear(); // ëª¨ë“  ë¦¬ì†ŒìŠ¤ë¥¼ ë¹„ì›Œì£¼ê³  
         foreach (var handle in _handles)
         {
-            Addressables.Release(handle); // AddressableÀÌ µé°í ÀÕ´Â HandleÀ» ¶§ÁÖ´Â °Í 
+            Addressables.Release(handle); // Addressableì´ ë“¤ê³  ì‡ëŠ” Handleì„ ë•Œì£¼ëŠ” ê²ƒ 
             _handles.Clear();
         }
     }
