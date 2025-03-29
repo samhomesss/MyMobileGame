@@ -4,7 +4,7 @@ using static Define;
 /// <summary>
 /// 모든 Scene들의 부모 역할을 담당하는 스크립트
 /// </summary>
-public class BaseScene : InitBase
+public abstract class BaseScene : InitBase
 {
     // 해당 씬 타입을 설정 할 수 있도록 부모 오브젝트에 넣어주고 해당 씬 타입을 나중에 자식에서 설정 할 수 있도록 해달라 
     public EScene SceneType { get; protected set; } = Define.EScene.Unknown;
@@ -35,4 +35,7 @@ public class BaseScene : InitBase
      
         return true;
     }
+
+    // 추후에 각 씬들이 지워질때 어떤 식으로 될지 말하는 거 
+    public abstract void Clear();
 }

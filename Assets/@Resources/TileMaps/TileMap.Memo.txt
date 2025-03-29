@@ -1,0 +1,16 @@
+TileMap을 사용할때 Windows -> 2D -> Tilepallet에서 팔레트를 켜주고 해당 새로운 팔래트를 사용하기 위해서 New로 설정 해주면 됨 
+
+Terrain을 사용할때 SpriteMdoe에서 Pixels Per Unit 이라는 기능이 있는데 이 기능은 200x100 비율의 오브젝트가 있다면 Pixels Per Unit은 이거 그대로 
+50 이라는 이야기는 조금더 크게 400 X 200 의 비율의 느낌으로 사용할 것이라는 의미를 뜻한다. 
+
+Grid를 사용할때 보통 BaseMap을 예시로 하면 해당 BaseMap이 가지고 있는 Grid 하나와 자식 오브젝트에 Gird 와 TileMapRender 부분들을 여러개 넣어서 
+전체적인 2D 필드 하나를 만든다 
+해당 자식 그리드들을 클릭해 보면 각 그리드 마다 Cell의 사이즈가 다르기 때문에 더 커지기도 하고 작아지기도 한다 아이소 메트리 형식이라면 Cell size 또한 
+2:1 의 비율로 늘려 나가는 것이 좋다.
+
+TileMap Renderer 기능에서 Mode 
+Individual -> 이런저런 타일을 배치해서 맵을 만들었을때 해당 맵의 이미지를 하나로 묶어서 관리하고 싶을 때 
+Order in Layer -> 어느 순서로 맵을 그려 줄 건가 크면 클수록 앞에 배치됨 (조금 여유를 주고 레이어를 설정 하는 것이 좋다.)
+
+랜덤하게 여러가지 타일 중에 뽑아주는 UIsometric Rule Tile이라는 기능이 존재함 
+해당 기능을 이용해서 Terrain을 이용한 길을 만들때 룰을 정해서 쉽게 만들 수 있다.
