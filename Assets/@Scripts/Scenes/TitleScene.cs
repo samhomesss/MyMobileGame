@@ -8,7 +8,7 @@ public class TitleScene : BaseScene
             return false;
 
         SceneType = Define.EScene.TitleScene;
-        StartLoadAssets();
+        //StartLoadAssets();
 
         return true;
     }
