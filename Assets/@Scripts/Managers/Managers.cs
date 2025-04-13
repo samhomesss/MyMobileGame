@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
     public static UI_Manager UI => Instance?._ui;
 
     DataManager _data = new DataManager();
-    ResourceManager _resource = new ResourceManager();
+    ResourceManager _resource = new ResourceManager(); 
     PoolManager _pool = new PoolManager();
     SoundManager _sound = new SoundManager();
     SceneManagerEX _scene = new SceneManagerEX();

@@ -45,10 +45,12 @@ public class UI_TitleScene : UI_Scene
             Debug.Log($"{key} {count}/ {totalCount}");
             if (count == totalCount)
             {
-                //Managers.Scene.LoadScene();
-                //Debug.Log("모든 오브젝트 다운 완료");
+                Managers.Data.Init(); // 로드 할때 Data초기화도 같이 해줌 
+
                 GetObject((int)GameObjects.StartImage).gameObject.SetActive(true);
                 GetText((int)Texts.DisplayText).text = $"Touch To Start";
+
+                //Managers.Data.MyTestDic[1]; 이런식으로 사용가능하다
             }
         });
     }

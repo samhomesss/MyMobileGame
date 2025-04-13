@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: UI
+  m_Name: Data
   m_EditorClassIdentifier: 
-  m_GroupName: UI
-  m_GUID: 46370c8b670a9194197c32d47076cd9d
+  m_GroupName: Data
+  m_GUID: 67b5b4bdab9558542a8c605b36234b09
   m_SerializeEntries:
-  - m_GUID: bdb28ec5c6cacf74e85b9891aed6d19c
-    m_Address: '@UI_TitleScene'
+  - m_GUID: d100629d8644f7b409aba9657660b6c1
+    m_Address: TestData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -25,5 +25,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 0c753177358a8fe45b3c8f563a610742, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 736066bbb38b68446a69283a7b34d260, type: 2}
-    - {fileID: 11400000, guid: 732c068b401b2074fb21684ed1f8983b, type: 2}
+    - {fileID: 11400000, guid: 8f72c2899ed75bf429253d24b41eb177, type: 2}
+    - {fileID: 11400000, guid: 2b4c14883800132478c3b045c304db64, type: 2}
