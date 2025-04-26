@@ -24,9 +24,9 @@ public static class Define
 
     public enum ESound
     {
-        Bgm,
-        Effect,
-        Max,
+        Bgm, // 일반 BGM
+        Effect, // 단발성 
+        Max, // 현재 ESound의 전체 갯수 
     }
 
     public enum EObjectType

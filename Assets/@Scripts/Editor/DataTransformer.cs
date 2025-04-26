@@ -13,7 +13,7 @@ using System.ComponentModel;
 /// <summary>
 /// Excel 기반으로 되어 있는 데이터 시트를 Json으로 파싱해서 바꿔주는 역할을 하는 Tool
 /// 리픞랙션을 이용 
-/// Type type = typeof(TestDataLoader) 이런식기으로 사용하는 것 
+/// Type type = typeof(TestDataLoader) 이런식으로 사용하는 것 
 /// type.GetFields -> 타입을 얻어 오는 것 
 /// 해당 코드는 내가 깊이 있는 공부가 필요 할 듯?
 /// </summary>
@@ -113,17 +113,19 @@ public class DataTransformer : EditorWindow
             LoaderData loaderData = new LoaderData();
 
             System.Reflection.FieldInfo[] fields = typeof(LoaderData).GetFields();
+            //-> Field를 하나씩 다 긁어 와서 하나씩 확인을 하는데 
             for (int f = 0; f < fields.Length; f++)
             {
+                //Field 방식으로 가져와서 Reflection 기능을 이용해서 사용한다.
                 FieldInfo field = loaderData.GetType().GetField(fields[f].Name);
                 Type type = field.FieldType;
 
-                if (type.IsGenericType)
+                if (type.IsGenericType) // 해당 필드의 Type이 GenericType 이면 리스트를 호출하고 
                 {
                     object value = ConvertList(row[f], type);
-                    field.SetValue(loaderData, value);
+                    field.SetValue(loaderData, value); // 그리고 받아온 값을 이용해서 Setting 해줌 
                 }
-                else
+                else // 그게 아니면 벨류를 호출한다.
                 {
                     object value = ConvertValue(row[f], field.FieldType);
                     field.SetValue(loaderData, value);
@@ -151,8 +153,9 @@ public class DataTransformer : EditorWindow
             return null;
 
         // Reflection
-        Type valueType = type.GetGenericArguments()[0];
-        Type genericListType = typeof(List<>).MakeGenericType(valueType);
+        Type valueType = type.GetGenericArguments()[0]; //첫번째 인자를 가져오고 
+        Type genericListType = typeof(List<>).MakeGenericType(valueType); // 가져와서 리스트로 만듬 
+        // TODO : 여기서 public List<MyTestData> tests = new List<TestData>를 만들고 싶은 것 
         var genericList = Activator.CreateInstance(genericListType) as IList;
 
         // Parse Excel
