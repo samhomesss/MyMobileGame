@@ -5,27 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// UI들의 최상위 조상 
-/// InitBase를 넣어주면서 초기화 루틴을 만들어 주고 
-/// </summary>
 public class UI_Base : InitBase
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
     private void Awake()
     {
-        Init();// 초기화 관련 루틴 
+        Init();
     }
 
-    /// <summary>
-    /// 소스 코드 안에서 해당 아이들을 찾아오는 방법 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="type"></param>
     protected void Bind<T>(Type type) where T : UnityEngine.Object
     {
-        string[] name = Enum.GetNames(type); // 해당 타입으로 이름을 찾아서 연결 시켜 줌 
+        string[] name = Enum.GetNames(type);
         UnityEngine.Object[] objects = new UnityEngine.Object[name.Length];
         _objects.Add(typeof(T), objects);
 
@@ -63,7 +54,7 @@ public class UI_Base : InitBase
 
     public static void BindEvent(GameObject go, Action<PointerEventData> action = null , Define.EUIEvent type = Define.EUIEvent.Click)
     {
-        UI_EventHandler evt = Util.GetOrAddComponet<UI_EventHandler>(go); // 해당 오브젝트를 추가하고 넘겨줌 
+        UI_EventHandler evt = Util.GetOrAddComponet<UI_EventHandler>(go);  
 
         switch (type)
         {

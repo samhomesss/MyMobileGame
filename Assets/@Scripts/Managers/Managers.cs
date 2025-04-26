@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 전역으로 관리할 Managers
-/// </summary>
 public class Managers : MonoBehaviour
 {
     public static Managers Instance { get { Init(); return s_instance; } }
@@ -24,9 +21,6 @@ public class Managers : MonoBehaviour
     UI_Manager _ui = new UI_Manager();
     #endregion
 
-    /// <summary>
-    /// Managers 생성 로직 
-    /// </summary>
     public static void Init()
     {
         if (s_instance == null)

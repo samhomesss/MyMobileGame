@@ -35,9 +35,6 @@ public class UI_TitleScene : UI_Scene
     }
 
 
-    /// <summary>
-    /// 게임 시작전 Addressable에 들어가 있는 오브젝트를 로드 하기 위함 
-    /// </summary>
     void StartLoadAssets()
     {
         Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
@@ -45,12 +42,10 @@ public class UI_TitleScene : UI_Scene
             Debug.Log($"{key} {count}/ {totalCount}");
             if (count == totalCount)
             {
-                Managers.Data.Init(); // 로드 할때 Data초기화도 같이 해줌 
+                Managers.Data.Init(); 
 
                 GetObject((int)GameObjects.StartImage).gameObject.SetActive(true);
                 GetText((int)Texts.DisplayText).text = $"Touch To Start";
-
-                //Managers.Data.MyTestDic[1]; 이런식으로 사용가능하다
             }
         });
     }

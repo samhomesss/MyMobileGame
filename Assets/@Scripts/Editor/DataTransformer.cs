@@ -19,23 +19,16 @@ using System.ComponentModel;
 /// </summary>
 public class DataTransformer : EditorWindow
 {
-#if UNITY_EDITOR // 때때로 Unity_Editor에서만 사용할 수 있는 기능이라고 동작 중에 에러가 뜨는 경우가 있어 #if Unity_Editor를 붙여줌 
-    /// <summary>
-    /// ctrl + shift + k 를 누르면 단축키가 발생 하도록 만듬 
-    /// </summary>
-    [MenuItem("Tools/ParseExcel %#K")] // 위에 상단쪽에 메뉴에 TOOL 이라는 도구창으로 이용 가능 하도록 만들고  % -> Ctrl # -> Shift 
+#if UNITY_EDITOR 
+    [MenuItem("Tools/ParseExcel %#K")] 
     public static void ParseExcelDataToJson()
     {
-        // 내가 읽어 오고 싶은 데이터의 데이터 형태와  파일 이름으로 Excel 데이터를 Json으로 변환 
-        //TestData 클래스를 읽어올 TestDataLoder , 내가 읽어 오고 싶은 Data class (TestData) , 그리고 Data 부분을 뺀 Excel의 이름 
         ParseExcelDataToJson<MyTestDataLoader, MyTestData>("Test");
-        //LEGACY_ParseTestData("Test");
 
         Debug.Log("DataTransformer Completed");
     }
 
     #region LEGACY
-    // LEGACY !
     public static T ConvertValue<T>(string value)
     {
         if (string.IsNullOrEmpty(value))
@@ -113,17 +106,15 @@ public class DataTransformer : EditorWindow
             LoaderData loaderData = new LoaderData();
 
             System.Reflection.FieldInfo[] fields = typeof(LoaderData).GetFields();
-            //-> Field를 하나씩 다 긁어 와서 하나씩 확인을 하는데 
             for (int f = 0; f < fields.Length; f++)
             {
-                //Field 방식으로 가져와서 Reflection 기능을 이용해서 사용한다.
                 FieldInfo field = loaderData.GetType().GetField(fields[f].Name);
                 Type type = field.FieldType;
 
-                if (type.IsGenericType) // 해당 필드의 Type이 GenericType 이면 리스트를 호출하고 
+                if (type.IsGenericType) 
                 {
                     object value = ConvertList(row[f], type);
-                    field.SetValue(loaderData, value); // 그리고 받아온 값을 이용해서 Setting 해줌 
+                    field.SetValue(loaderData, value); 
                 }
                 else // 그게 아니면 벨류를 호출한다.
                 {
@@ -152,13 +143,12 @@ public class DataTransformer : EditorWindow
         if (string.IsNullOrEmpty(value))
             return null;
 
-        // Reflection
-        Type valueType = type.GetGenericArguments()[0]; //첫번째 인자를 가져오고 
-        Type genericListType = typeof(List<>).MakeGenericType(valueType); // 가져와서 리스트로 만듬 
-        // TODO : 여기서 public List<MyTestData> tests = new List<TestData>를 만들고 싶은 것 
+  
+        Type valueType = type.GetGenericArguments()[0]; 
+        Type genericListType = typeof(List<>).MakeGenericType(valueType); 
+        
         var genericList = Activator.CreateInstance(genericListType) as IList;
 
-        // Parse Excel
         var list = value.Split('&').Select(x => ConvertValue(x, valueType)).ToList();
 
         foreach (var item in list)

@@ -10,10 +10,10 @@ public class SoundManager
 
     public void Init()
     {
-        if(_soundRoot == null) // 할당 되지 않았을 때
+        if(_soundRoot == null) 
         {
             _soundRoot = GameObject.Find("@SoundRoot");
-            if (_soundRoot == null) // 찾았는데 없을 때
+            if (_soundRoot == null) 
             {
                 _soundRoot = new GameObject { name = "@SoundRoot" };
                 UnityEngine.Object.DontDestroyOnLoad(_soundRoot);
@@ -99,7 +99,7 @@ public class SoundManager
     {
         AudioClip audioClip = null;
 
-        if (_audioClips.TryGetValue(key , out audioClip)) // 여기서 뺀 audioClip이 위에서 사용되는 것 
+        if (_audioClips.TryGetValue(key , out audioClip)) 
         {
             callback.Invoke(audioClip);
             return;

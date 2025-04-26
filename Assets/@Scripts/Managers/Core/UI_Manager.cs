@@ -47,13 +47,12 @@ public class UI_Manager
         }
         go.GetOrAddComponent<GraphicRaycaster>();
 
-        // sorting이 들어가야 하는 것인가 아닌가 팝업의 경우에는 내가 띄운 순서대로 쫙 떠야 하니까 sorting이 필요한데 
         if (sort)
         {
             canvas.sortingOrder = _order;
             _order++;
         }
-        else // SceneUI의 경우 sorting이 필요하지 않기 때문에  이렇게 나눠서 작성
+        else 
         {
             canvas.sortingOrder = sortOrder;
         }
@@ -94,7 +93,7 @@ public class UI_Manager
     public T ShowBaseUI<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
-            name = typeof(T).Name; // 해당 타입으로 찾기 위함 임 
+            name = typeof(T).Name;
 
         GameObject go = Managers.Resource.Instantiate(name);
         T baseUI = Util.GetOrAddComponet<T>(go);
