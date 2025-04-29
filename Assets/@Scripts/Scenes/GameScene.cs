@@ -8,7 +8,11 @@ public class GameScene : BaseScene
             return false;
 
         SceneType = Define.EScene.GameScene;
-        //TODO: 인게임 관련 스폰등 넣어주면 됨 
+
+        GameObject map = Managers.Resource.Instantiate("BaseMap"); // AddressAble에 올라가 있기 때문에 사용 가능 하다.
+        map.transform.position = Vector3.zero;
+        map.name = "@BaseMap";
+        //TODO
 
         return true;
     }
