@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: UI
   m_GUID: 46370c8b670a9194197c32d47076cd9d
   m_SerializeEntries:
+  - m_GUID: 3e6d5972fd80876429d6a0bb5e083f80
+    m_Address: UI_JoyStick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdb28ec5c6cacf74e85b9891aed6d19c
     m_Address: '@UI_TitleScene'
     m_ReadOnly: 0

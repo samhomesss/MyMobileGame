@@ -32,9 +32,9 @@ public static class Define
     public enum EObjectType
     {
         None,
-        Creature,
-        Projectile,
-        Env,
+        Creature,  
+        Projectile, 
+        Env, // 채집물  
     }
 
     public enum ECreatureType
@@ -45,6 +45,9 @@ public static class Define
         Npc,
     }
 
+    /// <summary>
+    /// Creature 상태 값
+    /// </summary>
     public enum ECreatureState
     {
         None,
@@ -53,7 +56,9 @@ public static class Define
         Skill,
         Dead,
     }
-
+    /// <summary>
+    /// Animation 이름
+    /// </summary>
     public static class AnimName
     {
         public const string IDLE = "idle";

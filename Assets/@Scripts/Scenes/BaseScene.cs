@@ -29,7 +29,7 @@ public abstract class BaseScene : InitBase
         {
             GameObject go = new GameObject { name = "@EventSystem" };
             go.AddComponent<EventSystem>();
-            go.AddComponent<StandaloneInputModule>(); // ??
+            go.AddComponent<StandaloneInputModule>(); // Spine을 움직이기 위한 방식 
         }
 
      
