@@ -18,11 +18,11 @@ public interface ILoader<Key , Value>
 /// </summary>
 public class DataManager
 {
-    public Dictionary<int, MyTestData> MyTestDic { get; private set; } = new Dictionary<int, MyTestData>();
+    public Dictionary<int, CreatureData> CreatureDic { get; private set; } = new Dictionary<int, CreatureData>();
 
     public void Init()
     {
-        MyTestDic = LoadJson<MyTestDataLoader, int, MyTestData>("TestData").MakeDict();
+        CreatureDic = LoadJson<CreatureDataLoader, int, CreatureData>("CreatureData").MakeDict();
     }
 
     /// <summary>

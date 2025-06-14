@@ -28,61 +28,11 @@ public class DataTransformer : EditorWindow
     {
         // 내가 읽어 오고 싶은 데이터의 데이터 형태와  파일 이름으로 Excel 데이터를 Json으로 변환 
         //TestData 클래스를 읽어올 TestDataLoder , 내가 읽어 오고 싶은 Data class (TestData) , 그리고 Data 부분을 뺀 Excel의 이름 
-        ParseExcelDataToJson<MyTestDataLoader, MyTestData>("Test");
+        ParseExcelDataToJson<CreatureDataLoader, CreatureData>("Creature");
         //LEGACY_ParseTestData("Test");
 
         Debug.Log("DataTransformer Completed");
     }
-
-    #region LEGACY
-    // LEGACY !
-    public static T ConvertValue<T>(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-            return default(T);
-
-        TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-        return (T)converter.ConvertFromString(value);
-    }
-
-    public static List<T> ConvertList<T>(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-            return new List<T>();
-
-        return value.Split('&').Select(x => ConvertValue<T>(x)).ToList();
-    }
-
-    static void LEGACY_ParseTestData(string filename)
-    {
-        MyTestDataLoader loader = new MyTestDataLoader();
-
-        string[] lines = File.ReadAllText($"{Application.dataPath}/@Resources/Data/ExcelData/{filename}Data.csv").Split("\n");
-
-        for (int y = 1; y < lines.Length; y++)
-        {
-            string[] row = lines[y].Replace("\r", "").Split(',');
-            if (row.Length == 0)
-                continue;
-            if (string.IsNullOrEmpty(row[0]))
-                continue;
-
-            int i = 0;
-            MyTestData testData = new MyTestData();
-            testData.Level = ConvertValue<int>(row[i++]);
-            testData.Exp = ConvertValue<int>(row[i++]);
-            testData.Skills = ConvertList<int>(row[i++]);
-            testData.Speed = ConvertValue<float>(row[i++]);
-            testData.Name = ConvertValue<string>(row[i++]);
-
-            loader.tests.Add(testData);
-        }
-
-        string jsonStr = JsonConvert.SerializeObject(loader, Formatting.Indented);
-        File.WriteAllText($"{Application.dataPath}/@Resources/Data/JsonData/{filename}Data.json", jsonStr);
-        AssetDatabase.Refresh();
-    }
-    #endregion
 
     #region Helpers
     private static void ParseExcelDataToJson<Loader, LoaderData>(string filename) where Loader : new() where LoaderData : new()

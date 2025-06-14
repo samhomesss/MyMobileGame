@@ -16,6 +16,8 @@ public class BaseObject : InitBase
     public float ColliderRadius { get { return Collider?.radius ?? 0.0f; } }
     public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }
 
+    public int DataTemplateID { get; set; }
+
     bool _lookLeft = true;
 
     // 온라인 멀티 게임을 염두해 두고 만든 변수 
