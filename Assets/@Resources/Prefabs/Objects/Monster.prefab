@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2011360277417526653}
   - component: {fileID: 2645244156410157345}
   - component: {fileID: 6553024072609535202}
+  - component: {fileID: 3684064960764508070}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -143,3 +144,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b531a9824fdbd449b5c5af55e0e612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &3684064960764508070
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343635597281440949}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

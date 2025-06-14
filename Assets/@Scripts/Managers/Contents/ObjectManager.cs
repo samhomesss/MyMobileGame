@@ -24,7 +24,13 @@ public class ObjectManager
     public Transform MonsterRoot { get { return GetRootTransform("@Monster"); } }
     #endregion
 
-    public T Spawn<T>(Vector3 position) where T : BaseObject
+    /// <summary>
+    /// 이제 Spawn 해줄 때 해당 아이디를 가지고 Spawn 해주면 됨 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public T Spawn<T>(Vector3 position , int templateID ) where T : BaseObject
     {
         string prefabName = typeof(T).Name;
 
@@ -38,6 +44,12 @@ public class ObjectManager
 
         if (obj.ObjectType == EObjectType.Creature)
         {
+            if (templateID != 0 && Managers.Data.CreatureDic.TryGetValue(templateID , out Data.CreatureData data) == false)
+            {
+                Debug.LogError($"ObjectManager Spawn Creature Failed! TryGetValue TemplateID : {templateID}");
+                return null;
+            }
+
             Creature creature = go.GetComponent<Creature>();
             switch(creature.CreatureType)
             {
@@ -53,6 +65,8 @@ public class ObjectManager
                     Monsters.Add(monster);
                     break;
             }
+
+            creature.SetInfo(templateID);
         }
         else if(obj.ObjectType == EObjectType.Projectile)
         {

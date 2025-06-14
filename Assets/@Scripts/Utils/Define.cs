@@ -56,16 +56,44 @@ public static class Define
         Skill,
         Dead,
     }
+
+
+    //임시로 각 데이터에 대한 TemplateID 설정 
+    public const int CAMERA_PROJECTION_SIZE = 12;
+
+    public const int HERO_WIZARD_ID = 201000;
+    public const int HERO_KNIGHT_ID = 201001;
+
+    public const int MONSTER_SLIME_ID = 202001;
+    public const int MONSTER_SPIDER_COMMON_ID = 202002;
+    public const int MONSTER_WOOD_COMMON_ID = 202004;
+    public const int MONSTER_GOBLIN_ARCHER_ID = 202005;
+    public const int MONSTER_BEAR_ID = 202006;
+
+    public const int ENV_TREE1_ID = 300001;
+    public const int ENV_TREE2_ID = 301000;
+
+
+
+
     /// <summary>
     /// Animation 이름
+    /// Attack_a 와 Attack_b 처럼 동일한 이름이 있어도 되는 것인가?
     /// </summary>
     public static class AnimName
     {
+        public const string ATTACK_A = "attack";
+        public const string ATTACK_B = "attack";
+        public const string SKILL_A = "skill";
+        public const string SKILL_B = "skill";
         public const string IDLE = "idle";
-        public const string ATTACK_A = "attack_a";
-        public const string ATTACK_B = "attack_b";
         public const string Move = "move";
+        public const string DAMAGED = "hit";
         public const string DEAD = "dead";
+        public const string EVENT_ATTACK_A = "event_attack";
+        public const string EVENT_ATTACK_B = "event_attack";
+        public const string EVENT_SKILL_A = "event_attack";
+        public const string EVENT_SKILL_B = "event_attack";
     }
 
     public static class  SortingLayers
