@@ -26,6 +26,12 @@ public static class Extension
             Managers.Resource.Destory(child.gameObject);
     }
 
+    public static void TranslateEx(this Transform transform , Vector3 dir)
+    {
+        BaseObject baseObject = transform.gameObject.GetComponent<BaseObject>();
+        if (baseObject != null)
+            baseObject.TranslateEx(dir);
+    }
 
     public static void Shuffle<T>(this IList<T> list)
     {

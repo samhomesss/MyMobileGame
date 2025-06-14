@@ -14,6 +14,7 @@ public class BaseObject : InitBase
 
     // public float ColliderRadius { get { return Collider != null ? Collider.radius : 0.0f; } }
     public float ColliderRadius { get { return Collider?.radius ?? 0.0f; } }
+    public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }
 
     bool _lookLeft = true;
 
@@ -41,6 +42,16 @@ public class BaseObject : InitBase
         Rigidbody = GetComponent<Rigidbody2D>();
 
         return true;
+    }
+
+    public void TranslateEx(Vector3 dir)
+    {
+        transform.Translate(dir);
+
+        if (dir.x < 0)
+            LookLeft = true;
+        else if (dir.x > 0)
+            LookLeft = false;
     }
 
     #region Spine 스파인 전용 함수 

@@ -24,12 +24,19 @@ public class UI_JoyStick : UI_Base
         _cursor = GetObject((int)GameObjects.JoystickCursor);
         _radius = _backGround.GetComponent<RectTransform>().sizeDelta.y / 5;
 
-        gameObject.BindEvent(OnPointerDown, type: Define.EUIEvent.PointerDown);
+        gameObject.BindEvent(OnPointerDown, type: Define.EUIEvent.PointerDown); // 사실상 이부분을 InputSystem에서 해주는 거 
         gameObject.BindEvent(OnPointerUp, type: Define.EUIEvent.PointerUp);
         gameObject.BindEvent(OnDrag, type: Define.EUIEvent.Drag);
 
         return true;
     }
+
+    #region InputSystem
+    // Move
+    // Jump -> EJumpInput  -> Action이 넘어가면 Animation 실행 
+    // Input -> Dir 
+
+    #endregion
 
     /// <summary>
     /// 
@@ -40,12 +47,13 @@ public class UI_JoyStick : UI_Base
         _backGround.transform.position = eventData.position;
         _cursor.transform.position = eventData.position;
         _touchPos = eventData.position;
-        //Managers.Game.JoystickState = Define.EJoystickState.PointerDown;
+        Managers.Game.JoyStickState = Define.EJoystickState.PointerDown;
     }
     public void OnPointerUp(PointerEventData eventData)
     {
         _cursor.transform.position = _touchPos;
-        //Managers.Game.JoystickState = Define.EJoystickState.PointerUp;
+        Managers.Game.MoveDir = Vector2.zero;
+        Managers.Game.JoyStickState = Define.EJoystickState.PointerUp;
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -56,8 +64,8 @@ public class UI_JoyStick : UI_Base
         Vector2 newPosition = _touchPos + moveDir * moveDist;
         _cursor.transform.position = newPosition;
 
-        //Managers.Game.MoveDir = moveDir;
-        //Managers.Game.JoystickState = Define.EJoystickState.Drag;
+        Managers.Game.MoveDir = moveDir;
+        Managers.Game.JoyStickState = Define.EJoystickState.Drag;
     }
 
 
