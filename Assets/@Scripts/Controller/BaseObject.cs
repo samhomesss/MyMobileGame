@@ -1,5 +1,6 @@
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Define;
 /// <summary>
 /// 모든 오브젝트 , 몬스터 , 히어로 , 날라다니는 투사체 등 
@@ -57,6 +58,20 @@ public class BaseObject : InitBase
     }
 
     #region Spine 스파인 전용 함수 
+    protected virtual void SetSpineAnimation(string dataLabel, int sortingOrder)
+    {
+        if (SkeletonAni != null)
+            return;
+
+        SkeletonAni.skeletonDataAsset = Managers.Resource.Load<SkeletonDataAsset>(dataLabel);
+        SkeletonAni.Initialize(true);
+
+        // Spine SkeletonAnimation은 SpriteRenderer를 사용하지 않고 MashRenderer를 사용함
+        // 그렇기 때문에 2D Sort Axis가 안먹히게 되는데 SortingGroup을 SpriteRenderer, MeshRenderer를 같이 계산함
+        SortingGroup sg = Util.GetOrAddComponet<SortingGroup>(gameObject);
+        sg.sortingOrder = sortingOrder;
+    }
+
     /// <summary>
     /// 상속받는 자식에서 해당 함수를 구현 하는 거 
     /// </summary>

@@ -1,3 +1,4 @@
+using Data;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
@@ -9,6 +10,7 @@ public class ObjectManager
     /// </summary>
     public HashSet<Hero> Heros { get; } =  new HashSet<Hero>();
     public HashSet<Monster> Monsters { get; } = new HashSet<Monster>();
+    public HashSet<Env> Envs { get; } = new HashSet<Env>(); // 채집물 저장할 HashSet
 
     #region Root
     public Transform GetRootTransform(string name)
@@ -22,6 +24,7 @@ public class ObjectManager
 
     public Transform HeroRoot { get { return GetRootTransform("@Hero"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monster"); } }
+    public Transform EnvRoot { get { return GetRootTransform("@Env"); } }
     #endregion
 
     /// <summary>
@@ -74,7 +77,18 @@ public class ObjectManager
         }    
         else if(obj.ObjectType == EObjectType.Env)
         {
-            // TODO : 환경요소
+            if (templateID != 0 && Managers.Data.EnvDic.TryGetValue(templateID , out EnvData data) == false)
+            {
+                Debug.LogError($"ObjectManager Spawn Env Failed! TryGetValue TemplateID : {templateID}");
+                return null;
+            }
+
+            obj.transform.parent = EnvRoot;
+
+            Env env = go.GetComponent<Env>();
+            Envs.Add(env);
+
+            env.SetInfo(templateID);
         }
 
         return obj as T;

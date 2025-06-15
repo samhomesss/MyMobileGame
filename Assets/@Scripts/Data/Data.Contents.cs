@@ -84,4 +84,33 @@ namespace Data
     }
 
     #endregion
+
+    #region Env
+    [Serializable]
+    public class EnvData
+    {
+        public int DataId;
+        public string DescriptionTextID;
+        public string PrefabLabel;
+        public float MaxHp;
+        public int ResourceAmount;
+        public float RegenTime;
+        public List<String> SkeletonDataIDs = new List<String>();
+        public int DropItemId;
+    }
+
+    [Serializable]
+    public class EnvDataLoader : ILoader<int, EnvData>
+    {
+        public List<EnvData> envs = new List<EnvData>();
+        public Dictionary<int, EnvData> MakeDict()
+        {
+            Dictionary<int , EnvData> dict = new Dictionary<int , EnvData>();
+            foreach(EnvData env in envs)
+                dict.Add(env.DataId, env);
+            return dict;
+        }
+    }
+
+    #endregion
 }

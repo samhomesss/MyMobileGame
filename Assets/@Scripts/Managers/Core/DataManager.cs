@@ -19,10 +19,11 @@ public interface ILoader<Key , Value>
 public class DataManager
 {
     public Dictionary<int, CreatureData> CreatureDic { get; private set; } = new Dictionary<int, CreatureData>();
-
+    public Dictionary<int, EnvData> EnvDic { get; private set; } = new Dictionary<int, EnvData>();
     public void Init()
     {
         CreatureDic = LoadJson<CreatureDataLoader, int, CreatureData>("CreatureData").MakeDict();
+        EnvDic = LoadJson<EnvDataLoader , int , EnvData>("EnvData").MakeDict();
     }
 
     /// <summary>

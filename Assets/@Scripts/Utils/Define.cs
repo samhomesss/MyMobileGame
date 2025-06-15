@@ -57,6 +57,12 @@ public static class Define
         Dead,
     }
 
+    public enum EEnvState
+    {
+        Idle,
+        OnDamaged,
+        Dead,
+    }
 
     //임시로 각 데이터에 대한 TemplateID 설정 
     public const int CAMERA_PROJECTION_SIZE = 12;

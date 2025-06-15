@@ -29,6 +29,7 @@ public class DataTransformer : EditorWindow
         // 내가 읽어 오고 싶은 데이터의 데이터 형태와  파일 이름으로 Excel 데이터를 Json으로 변환 
         //TestData 클래스를 읽어올 TestDataLoder , 내가 읽어 오고 싶은 Data class (TestData) , 그리고 Data 부분을 뺀 Excel의 이름 
         ParseExcelDataToJson<CreatureDataLoader, CreatureData>("Creature");
+        ParseExcelDataToJson<EnvDataLoader, EnvData>("Env");
         //LEGACY_ParseTestData("Test");
 
         Debug.Log("DataTransformer Completed");
